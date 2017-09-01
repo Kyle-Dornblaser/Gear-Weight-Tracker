@@ -16,17 +16,33 @@
 		<div class="ui-content content-padding">
 		  <p>
 		      <span class="green">
-			     <span class="weight-int">125</span> lbs
+			     <span id="weight-int" class="weight">-</span> lbs
 		      </span>
 			 <br>
-			 <small>2 days ago</small>
+			 <small id="days-ago">--</small>
 	       </p>
 			 
 		</div>
 		<footer class="ui-footer ui-bottom-button">
-		<a href="#page2" class="ui-btn">Log Weight</a>
+		<a class="ui-btn" id="update-button">Log Weight</a>
 		</footer>
 	</div>
+	
+	<div class="ui-page" id="update">
+        <div class="ui-content content-padding">
+          <p>
+              <span class="green">
+                 <span id="update-weight-int" class="weight">-</span> lbs
+              </span>
+               <br>
+             <small id="difference">0.0 lbs</small>
+           </p>
+             
+        </div>
+        <footer class="ui-footer ui-bottom-button">
+            <a class="ui-btn" id="submit-update-button">Submit</a>
+        </footer>
+    </div>
 	<script type="text/javascript" src="lib/tau/wearable/js/tau.min.js"></script>
 	<script src="app.js"></script>
 	<script src="lowBatteryCheck.js"></script>

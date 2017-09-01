@@ -8,4 +8,7 @@
     <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
     <tizen:profile name="wearable"/>
     <tizen:setting hwkey-event="enable"/>
+    <access origin="*" subdomains="true"></access>
+    <tizen:allow-navigation>https://www.kyledornblaser.com</tizen:allow-navigation>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
 </widget>

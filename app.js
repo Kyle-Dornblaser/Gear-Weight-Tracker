@@ -80,6 +80,10 @@
 		return kilograms * 2.20462262185;
 	};
 	
+	var convertPoundsToKilograms = function(pounds) {
+		return pounds / 2.20462262185;
+	};
+	
 	renderWeight();
 	
 	var updateButton = document.getElementById('update-button');
@@ -95,6 +99,32 @@
     	 documentUpdateWeight.textContent = currentWeight.toFixed(1);
     	 documentDifference.textContent = 0.0;
         tau.changePage('#update');
+    });
+	
+	var submitUpdateButton = document.getElementById('submit-update-button');
+	submitUpdateButton.addEventListener('click', function() {
+    	 var documentUpdateWeight = document.querySelector("#update-weight-int");
+    	 var documentStatus = document.querySelector("#status");
+    	 var currentWeight = documentUpdateWeight.textContent;
+    	 currentWeight = convertPoundsToKilograms(currentWeight);
+    	 
+    	 
+    	 var httpRequest = new XMLHttpRequest();
+ 	    httpRequest.onreadystatechange = function(){
+ 	    	console.log('onreadystatechange');
+ 	       if (httpRequest.status === 200) {
+ 	    	   console.log('200');
+ 	    	   documentStatus.textContent = 'Success';
+ 	    	  
+ 	       }
+ 	    };
+ 	
+ 	    httpRequest.open('GET', 'https://www.kyledornblaser.com/Fat-Secret/index.php?method=weight.update&current_weight_kg=' + currentWeight, true);
+ 	    httpRequest.send();
+ 	    
+ 	    documentStatus.textContent = 'Loading';
+ 	    
+    	 
     });
 	
 	

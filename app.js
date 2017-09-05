@@ -22,15 +22,7 @@
 	
 	var renderWeight = function() {
 		var weights = localStorage.getItem('weights');
-		var weightsDate = new Date(localStorage.getItem('weightsDate'));
-		var hour = 1000 * 60 * 60;
-		var updateTime = hour * 4; // update cached weights after this time
-		
-		if (weights === null) {
-			updateWeight();
-		} else if((new Date() - weightsDate) > updateTime) {
-			updateWeight();
-		} else {
+		if (weights !== null) {
 			weights = JSON.parse(weights);
 			var currentWeightObj =  weights[weights.length - 1];
 			var currentWeight = currentWeightObj.weight_kg; // weight in kilos
@@ -45,7 +37,8 @@
 	};
 	
 	var updateWeight = function() {
-		console.log('updateWeight');
+	    var documentLoading = document.querySelector("#main .cp-spinner");
+	    documentLoading.classList.remove('hidden');
 	    var httpRequest = new XMLHttpRequest();
 	    httpRequest.onreadystatechange = function(){
 	    	console.log('onreadystatechange');
@@ -56,11 +49,13 @@
 	    	   localStorage.setItem('weights', JSON.stringify(weights.month.day));
 	    	   localStorage.setItem('weightsDate', new Date());
 	    	   renderWeight();
+	    	   documentLoading.classList.add('hidden');
 	       }
 	    };
 	
 	    httpRequest.open('GET', 'https://www.kyledornblaser.com/Fat-Secret/index.php?method=weights.get_month', true);
 	    httpRequest.send();
+	    
 	}
 	
 	var convertDaysSinceEpochToAgo = function(daysSinceEpoch) {
@@ -84,7 +79,34 @@
 		return pounds / 2.20462262185;
 	};
 	
+	var saveWeight = function(weight) {
+		var weights = localStorage.getItem('weights');
+		weights = JSON.parse(weights);
+		// check if last weight was already added today
+		var lastWeight =  weights[weights.length - 1];
+		var lastWeightDate = lastWeight.date_int;
+		var now = new Date();
+		var currentDaysSinceEpoch = Math.floor(now/8.64e7);
+		if (lastWeightDate === currentDaysSinceEpoch) {
+			weights[weights.length - 1].weight_kg = weight;
+			console.log('replace');
+		} else {
+			weights.push({date_int: currentDaysSinceEpoch, weight_kg: weight});
+			console.log('add');
+		}
+		localStorage.setItem('weights', JSON.stringify(weights));
+ 	   	localStorage.setItem('weightsDate', new Date());
+		
+	};
+	
 	renderWeight();
+	var hour = 1000 * 60 * 60;
+	var updateTime = hour * 4; // update cached weights after this time
+	var weights = localStorage.getItem('weights');
+	var weightsDate = new Date(localStorage.getItem('weightsDate'));
+	if (weights === null || (new Date() - weightsDate) > updateTime) {
+		updateWeight();
+	}
 	
 	var updateButton = document.getElementById('update-button');
 	updateButton.addEventListener('click', function() {
@@ -104,7 +126,7 @@
 	var submitUpdateButton = document.getElementById('submit-update-button');
 	submitUpdateButton.addEventListener('click', function() {
     	 var documentUpdateWeight = document.querySelector("#update-weight-int");
-    	 var documentStatus = document.querySelector("#status");
+    	 var documentStatus = document.querySelector("#update .cp-spinner");
     	 var currentWeight = documentUpdateWeight.textContent;
     	 currentWeight = convertPoundsToKilograms(currentWeight);
     	 
@@ -114,7 +136,10 @@
  	    	console.log('onreadystatechange');
  	       if (httpRequest.status === 200) {
  	    	   console.log('200');
- 	    	   documentStatus.textContent = 'Success';
+ 	    	  documentStatus.classList.add('hidden');
+ 	    	  saveWeight(currentWeight);
+ 	    	  renderWeight();
+ 	    	  window.history.back();
  	    	  
  	       }
  	    };
@@ -122,7 +147,7 @@
  	    httpRequest.open('GET', 'https://www.kyledornblaser.com/Fat-Secret/index.php?method=weight.update&current_weight_kg=' + currentWeight, true);
  	    httpRequest.send();
  	    
- 	    documentStatus.textContent = 'Loading';
+ 	    documentStatus.classList.remove('hidden');
  	    
     	 
     });

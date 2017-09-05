@@ -1,10 +1,10 @@
 * {
-    font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 body {
-    margin: 0px auto;
-    background-color:#222;
+	margin: 0px auto;
+	background-color: #222;
 }
 
 .contents {
@@ -12,7 +12,7 @@ body {
 	display: -webkit-flex;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	height:320px;
+	height: 320px;
 }
 
 .content-padding {
@@ -23,9 +23,9 @@ body {
 }
 
 .content_text {
-	font-weight:bold;
-	font-size:5em;
-	color:#fff;
+	font-weight: bold;
+	font-size: 5em;
+	color: #fff;
 }
 
 .green {
@@ -46,4 +46,59 @@ p {
 
 .ui-btn {
 	/*background-color: #1a5926 !important; */
+	
+}
+
+.hidden {
+	display: none !important;
+}
+
+.cp-spinner {
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	box-sizing: border-box;
+	position: relative;
+	top: 3px;
+	left: 4px;
+}
+
+.cp-round:before {
+	border-radius: 50%;
+	content: " ";
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	box-sizing: border-box;
+	border-top: solid 6px #bababa;
+	border-right: solid 6px #bababa;
+	border-bottom: solid 6px #bababa;
+	border-left: solid 6px #bababa;
+	position: absolute;
+	top: 0;
+	left: 0
+}
+
+.cp-round:after {
+	border-radius: 50%;
+	content: " ";
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	box-sizing: border-box;
+	border-top: solid 6px #33b24b;
+	border-right: solid 6px transparent;
+	border-bottom: solid 6px transparent;
+	border-left: solid 6px transparent;
+	position: absolute;
+	top: 0;
+	left: 0;
+	animation: cp-round-animate 1s ease-in-out infinite
+}
+
+@keyframes cp-round-animate { 0%{
+	transform: rotate(0)
+    }100%{
+        transform:rotate(360deg)
+    }
 }

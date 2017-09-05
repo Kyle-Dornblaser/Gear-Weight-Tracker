@@ -45,8 +45,12 @@ p {
 }
 
 .ui-btn {
-	/*background-color: #1a5926 !important; */
+	background-color: #1a5926 !important;
 	
+}
+
+.ui-btn-active {
+    background-color: #258537 !important;	
 }
 
 .hidden {

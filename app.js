@@ -37,7 +37,7 @@
 	};
 	
 	var updateWeight = function() {
-	    var documentLoading = document.querySelector("#main .cp-spinner");
+	    var documentLoading = document.querySelector("#main .loading");
 	    documentLoading.classList.remove('hidden');
 	    var httpRequest = new XMLHttpRequest();
 	    httpRequest.onreadystatechange = function(){
@@ -126,7 +126,7 @@
 	var submitUpdateButton = document.getElementById('submit-update-button');
 	submitUpdateButton.addEventListener('click', function() {
     	 var documentUpdateWeight = document.querySelector("#update-weight-int");
-    	 var documentStatus = document.querySelector("#update .cp-spinner");
+    	 var documentStatus = document.querySelector("#update .loading");
     	 var currentWeight = documentUpdateWeight.textContent;
     	 currentWeight = convertPoundsToKilograms(currentWeight);
     	 
